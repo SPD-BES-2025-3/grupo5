@@ -1,14 +1,14 @@
 # Grupo 5 - Sistema de Agendamento para salão de beleza
 
-## Introdução
+## 1. Introdução
 
-### Justificativa
+### 1.1 Justificativa
 
 Atualmente, muitos estabelecimentos de pequeno e médio porte ainda dependem de métodos manuais para a gestão de suas operações, como agendas de papel, planilhas eletrônicas ou aplicativos de mensagens (WhatsApp). Tais métodos, embora funcionais até certo ponto, são ineficientes, suscetíveis a erros humanos e não fornecem dados estratégicos para o crescimento do negócio.
 
 A implementação de um sistema de gestão centralizado e digital justifica-se pela necessidade de otimizar processos, reduzir falhas operacionais (como agendamentos duplicados ou esquecidos), melhorar a comunicação com o cliente e fornecer uma base sólida para a tomada de decisões gerenciais.
 
-### Descrição do problema
+### 1.2 Descrição do problema
 
 A gestão manual ou descentralizada de um estabelecimento de beleza acarreta uma série de problemas práticos que impactam diretamente a produtividade e a lucratividade:
 
@@ -22,19 +22,19 @@ A gestão manual ou descentralizada de um estabelecimento de beleza acarreta uma
 
 - Ausência de Métricas e Relatórios: É praticamente impossível extrair dados importantes, como os serviços mais rentáveis, os profissionais mais requisitados ou os períodos de maior movimento, informações cruciais para o planejamento estratégico.
 
-### Motivação
+### 1.3 Motivação
 
 A motivação central deste projeto é de natureza técnica e acadêmica, com um foco aprofundado na exploração prática de estratégias de persistência de dados em sistemas de software modernos. Embora a construção de uma aplicação web completa seja um objetivo, o pilar do trabalho é utilizar este cenário prático (sistema de gestão para estabelecimentos de beleza) como um laboratório para investigar e implementar uma arquitetura de persistência poliglota.
 
 O projeto se propõe a ir além do modelo tradicional de um único banco de dados relacional, abordando o desafio de como diferentes tipos de dados, com seus respectivos requisitos de consistência, performance e estrutura, demandam soluções de armazenamento distintas.
 
-## Plano
+## 2. Plano
 
-### Objetivos Geral
+### 2.1 Objetivos Geral
 
 Projetar, implementar e analisar um sistema web funcional para gestão de estabelecimentos de beleza, utilizando-o como um estudo de caso prático para a aplicação de uma arquitetura de persistência poliglota, na qual diferentes tecnologias de armazenamento de dados são integradas para resolver problemas específicos de performance, escalabilidade, flexibilidade e consistência.
 
-### Objetivos especificos
+### 2.2 Objetivos especificos
 
 - **Otimizar a Agenda:**
   Substituir agendamentos manuais por uma agenda digital centralizada, eliminando conflitos de horário e otimizando a rotina da recepção.
@@ -62,8 +62,8 @@ Projetar, implementar e analisar um sistema web funcional para gestão de estabe
 - JUnit
 - JavaDoc e Swagger
 
-## Modelagem
+## 3. Modelagem
 
-### Diagrama de Classes:
+### 3.1 Diagrama de Classes:
 
 ![Diagrama de Classes](diagramas/diagramaClasses.png)

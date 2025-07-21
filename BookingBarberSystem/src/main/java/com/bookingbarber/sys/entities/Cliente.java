@@ -2,6 +2,7 @@ package com.bookingbarber.sys.entities;
 
 import jakarta.persistence.*;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,9 +11,9 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class Cliente extends Usuario{
 
-    private Date dataCriacao;
+    private OffsetDateTime dataCriacao;
 
-    private Date ultimaVisita;
+    private OffsetDateTime ultimaVisita;
 
     private Integer pontosFidelidade;
 
@@ -21,26 +22,26 @@ public class Cliente extends Usuario{
 
     public Cliente(){}
 
-    public Cliente(Long id, String nome, String sobrenome, String cpf, String email, String password, String urlFotoPerfil, Date dataCriacao, Date ultimaVisita, Integer pontosFidelidade) {
+    public Cliente(Long id, String nome, String sobrenome, String cpf, String email, String password, String urlFotoPerfil, OffsetDateTime dataCriacao, OffsetDateTime ultimaVisita, Integer pontosFidelidade) {
         super(id, nome, sobrenome, cpf, email, password, urlFotoPerfil);
         this.dataCriacao = dataCriacao;
         this.ultimaVisita = ultimaVisita;
         this.pontosFidelidade = pontosFidelidade;
     }
 
-    public Date getDataCriacao() {
+    public OffsetDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getUltimaVisita() {
+    public OffsetDateTime getUltimaVisita() {
         return ultimaVisita;
     }
 
-    public void setUltimaVisita(Date ultimaVisita) {
+    public void setUltimaVisita(OffsetDateTime ultimaVisita) {
         this.ultimaVisita = ultimaVisita;
     }
 

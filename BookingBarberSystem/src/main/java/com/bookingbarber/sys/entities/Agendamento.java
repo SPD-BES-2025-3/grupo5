@@ -3,6 +3,8 @@ package com.bookingbarber.sys.entities;
 import com.bookingbarber.sys.entities.enums.StatusAgendamento;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,10 +15,14 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date horario;
+    private OffsetDateTime horarioInicio;
+
+    private OffsetDateTime horarioFim;
 
     @Enumerated(EnumType.STRING)
     private StatusAgendamento status;
+
+    private BigDecimal valorTotal;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -24,16 +30,11 @@ public class Agendamento {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Profissional profissional;
+
     @OneToMany(mappedBy = "agendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ServicoAgendado> servicosAgendados;
 
     public Agendamento(){}
-
-    public Agendamento(Long id, Date horario, StatusAgendamento status) {
-        this.id = id;
-        this.horario = horario;
-        this.status = status;
-    }
 
     public Long getId() {
         return id;
@@ -43,12 +44,20 @@ public class Agendamento {
         this.id = id;
     }
 
-    public Date getHorario() {
-        return horario;
+    public OffsetDateTime getHorarioInicio() {
+        return horarioInicio;
     }
 
-    public void setHorario(Date horario) {
-        this.horario = horario;
+    public void setHorarioInicio(OffsetDateTime horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
+
+    public OffsetDateTime getHorarioFim() {
+        return horarioFim;
+    }
+
+    public void setHorarioFim(OffsetDateTime horarioFim) {
+        this.horarioFim = horarioFim;
     }
 
     public StatusAgendamento getStatus() {
@@ -57,5 +66,37 @@ public class Agendamento {
 
     public void setStatus(StatusAgendamento status) {
         this.status = status;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Profissional getProfissional() {
+        return profissional;
+    }
+
+    public void setProfissional(Profissional profissional) {
+        this.profissional = profissional;
+    }
+
+    public Set<ServicoAgendado> getServicosAgendados() {
+        return servicosAgendados;
+    }
+
+    public void setServicosAgendados(Set<ServicoAgendado> servicosAgendados) {
+        this.servicosAgendados = servicosAgendados;
     }
 }

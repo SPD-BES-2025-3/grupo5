@@ -23,6 +23,10 @@ public class Usuario {
     private String password;
 
     private String urlFotoPerfil;
+
+    private Boolean ativo;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_role",
         joinColumns = @JoinColumn(name = "usuario_id"),
@@ -95,5 +99,21 @@ public class Usuario {
 
     public void setUrlFotoPerfil(String urlFotoPerfil) {
         this.urlFotoPerfil = urlFotoPerfil;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

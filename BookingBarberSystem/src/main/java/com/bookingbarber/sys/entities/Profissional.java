@@ -2,6 +2,7 @@ package com.bookingbarber.sys.entities;
 
 import jakarta.persistence.*;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Profissional extends Usuario {
 
     private String numeroRegistro;
 
-    private Date dataContratacao;
+    private OffsetDateTime dataContratacao;
 
     private Double percentualComissao;
 
@@ -26,7 +27,7 @@ public class Profissional extends Usuario {
 
     public Profissional(){}
 
-    public Profissional(Long id, String nome, String sobrenome, String cpf, String email, String password, String urlFotoPerfil, String numeroRegistro, Date dataContratacao, Double percentualComissao) {
+    public Profissional(Long id, String nome, String sobrenome, String cpf, String email, String password, String urlFotoPerfil, String numeroRegistro, OffsetDateTime dataContratacao, Double percentualComissao) {
         super(id, nome, sobrenome, cpf, email, password, urlFotoPerfil);
         this.numeroRegistro = numeroRegistro;
         this.dataContratacao = dataContratacao;
@@ -41,11 +42,11 @@ public class Profissional extends Usuario {
         this.numeroRegistro = numeroRegistro;
     }
 
-    public Date getDataContratacao() {
+    public OffsetDateTime getDataContratacao() {
         return dataContratacao;
     }
 
-    public void setDataContratacao(Date dataContratacao) {
+    public void setDataContratacao(OffsetDateTime dataContratacao) {
         this.dataContratacao = dataContratacao;
     }
 

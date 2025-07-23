@@ -55,15 +55,50 @@ Projetar, implementar e analisar um sistema web funcional para gestão de estabe
 
 - Java 21
 - Spring Boot
-- ORM: Postgresql
-- ODM: Mongodb
-- Integrador: Redis
+- Persistência usando Sring Data JPA
+- Banco de dados ORM: Postgresql
+- Banco de dados ODM: Mongodb
+- Broker: RabbitMQ
 - Javafx
 - JUnit
 - JavaDoc e Swagger
 
-## 3. Modelagem
+## 3. Cronograma
 
-### 3.1 Diagrama de Classes:
+### Fase 1: Estrutura Principal (Concluída)
+
+_Período: Sábado, 19/07 a Terça, 22/07_
+
+- [x] Implementação da camada de persistência com **ORM (PostgreSQL)**.
+- [x] Modelagem das entidades relacionais (`Agendamento`, `Cliente`, `Servico`, etc.).
+- [x] Criação dos Repositórios com Spring Data JPA/Hibernate.
+- [x] Definição da lógica de negócio inicial.
+
+---
+
+### Fase 2: Implementação e Finalização
+
+| Data      | Foco Principal             | Tarefas Detalhadas                                                                                                                                                                                                              | Meta do Dia / Entregável                                              |
+| :-------- | :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------- |
+| **23/07** | Estrutura ODM e Broker     | <ul><li>Definir esquemas para MongoDB.</li><li>Criar repositórios para MongoDB.</li><li>Instalar e configurar RabbitMQ.</li><li>Declarar Exchanges e Queues.</li></ul>                                                          | Base do MongoDB e RabbitMQ prontas e acessíveis.                      |
+| **24/07** | Publisher e Listener       | <ul><li>Criar a classe `Publisher` na aplicação principal.</li><li>Estruturar o projeto do `Middleware Integrador`.</li><li>Implementar o `Consumer` básico para validar a comunicação.</li></ul>                               | Mensagem enviada pela app principal e recebida pelo Middleware.       |
+| **25/07** | Middleware Integrador      | <ul><li>Implementar enriquecimento de dados (buscar no PostgreSQL).</li><li>Implementar transformação (desnormalização).</li><li>Salvar o documento final no MongoDB.</li><li>Implementar envio do `ACK` ao RabbitMQ.</li></ul> | Fluxo de sincronização de dados completo (end-to-end) funcional.      |
+| **26/07** | Interface Gráfica (JavaFX) | <ul><li>Desenvolver telas principais (foco no agendamento).</li><li>Criar formulários, tabelas e botões.</li><li>Conectar ações da UI com a camada de serviço da aplicação ORM.</li></ul>                                       | UI funcional que permite criar/ler agendamentos, disparando o evento. |
+| **27/07** | Testes e Documentação      | <ul><li>Escrever testes unitários para a lógica de transformação.</li><li>Iniciar a documentação com o SWAGGER.</li></ul>                                                                                                       | Qualidade do sistema garantida e documentação iniciada.               |
+| **28/07** | Refinamento e Entrega      | <ul><li>Revisar e refatorar o código.</li><li>Corrigir bugs encontrados nos testes.</li><li>Finalizar a documentação com exemplos.</li><li>Preparar o projeto para entrega final.</li></ul>                                     | **Finalização do projeto**                                            |
+
+## 4. Modelagem
+
+### 4.1 Diagrama de Classes:
 
 ![Diagrama de Classes](diagramas/diagramaClasses.png)
+
+### 4.2 Diagrama de Componentes:
+
+![Diagrama de Classes](diagramas/DiagramaComponentes.png)
+
+### 4.3 Diagrama de Sequência:
+
+Inclusão de um objeto no ORM.
+
+![Diagrama de Classes](diagramas/disgramaSequencia.png)

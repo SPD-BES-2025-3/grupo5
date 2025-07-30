@@ -26,7 +26,7 @@ public class StageInitializer implements ApplicationListener<JavaFxApplication.S
             Stage stage = event.getStage();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
-            fxmlLoader.setControllerFactory(applicationContext::getBean); // MÁGICA ACONTECE AQUI!
+            fxmlLoader.setControllerFactory(applicationContext::getBean);
 
             Scene scene = new Scene(fxmlLoader.load(), 400, 250);
             stage.setTitle("Login - Sistema de Agendamento");

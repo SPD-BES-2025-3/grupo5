@@ -95,6 +95,25 @@ public class AgendamentoService {
 
     }
     @Transactional(readOnly = true)
+    public List<AgendamentoResponseDTO> findAllAgendamentos(){
+        return agendamentoRepository.findAll().stream().map(this::mapToDetalhadoDTO).toList();
+
+    }
+    @Transactional(readOnly = true)
+    public List<AgendamentoResponseDTO> listarPorCliente(Long clienteId) {
+        if (!clienteRepository.existsById(clienteId)) {
+            throw new EntityNotFoundException("Cliente não encontrado.");
+        }
+        return agendamentoRepository.findAllByClienteIdOrderByHorarioInicioDesc(clienteId)
+                .stream()
+                .map(this::mapToDetalhadoDTO)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+    @Transactional(readOnly = true)
     public AgendamentoResponseDTO buscarAgendamentoPorId(Long id){
         return agendamentoRepository.findById(id)
                 .map(this::mapToDetalhadoDTO)
@@ -129,7 +148,6 @@ public class AgendamentoService {
         return mapToDetalhadoDTO(agendamentoSalvo);
     }
 
-    // 5. DELETAR (Cancelar)
     @Transactional
     public void cancelar(Long agendamentoId) {
         var agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado."));
@@ -144,7 +162,11 @@ public class AgendamentoService {
         }
 
         agendamento.setStatus(StatusAgendamento.CANCELADO);
-        // Em um sistema real, aqui você poderia disparar um evento para notificar o cliente e o profissional.
+    }
+
+    @Transactional
+    public void deletarRegistro(Long agendamentoId){
+        agendamentoRepository.deleteById(agendamentoId);
     }
 
 

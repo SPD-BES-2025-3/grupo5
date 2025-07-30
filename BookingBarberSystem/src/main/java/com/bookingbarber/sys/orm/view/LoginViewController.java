@@ -1,7 +1,5 @@
-package com.bookingbarber.sys.orm.controller;
+package com.bookingbarber.sys.orm.view;
 
-import com.bookingbarber.sys.JavaFxApplication;
-import com.bookingbarber.sys.javafx.ApiClient;
 import com.bookingbarber.sys.javafx.UserSession;
 import com.bookingbarber.sys.orm.dto.auth.LoginRequestDTO;
 import com.bookingbarber.sys.orm.dto.cliente.ClienteResponseDTO;

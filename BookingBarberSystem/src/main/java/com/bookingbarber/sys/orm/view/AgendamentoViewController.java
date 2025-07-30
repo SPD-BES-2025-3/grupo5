@@ -1,6 +1,5 @@
-package com.bookingbarber.sys.orm.controller;
+package com.bookingbarber.sys.orm.view;
 
-import com.bookingbarber.sys.javafx.ApiClient;
 import com.bookingbarber.sys.javafx.UserSession;
 import com.bookingbarber.sys.orm.dto.agendamento.AgendamentoRequestDTO;
 import com.bookingbarber.sys.orm.dto.cliente.ClienteResponseDTO;
@@ -12,8 +11,13 @@ import com.bookingbarber.sys.orm.service.ServicoService;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,9 @@ public class AgendamentoViewController {
     @FXML private Button agendarButton;
     @FXML private Label statusLabel;
 
+    @FXML private Button historicoButton;
+    @FXML private Button logoutButton;
+
     // --- Injeção dos Serviços do Backend ---
     private final AgendamentoService agendamentoService;
     private final ProfissionalService profissionalService;
@@ -45,10 +51,13 @@ public class AgendamentoViewController {
 
     private ClienteResponseDTO clienteLogado;
 
-    public AgendamentoViewController(AgendamentoService agendamentoService, ProfissionalService profissionalService, ServicoService servicoService) {
+    private final ApplicationContext context; // Injetar o ApplicationContext
+
+    public AgendamentoViewController(AgendamentoService agendamentoService, ProfissionalService profissionalService, ServicoService servicoService, ApplicationContext context) {
         this.agendamentoService = agendamentoService;
         this.profissionalService = profissionalService;
         this.servicoService = servicoService;
+        this.context = context; // Armazenar o contexto
     }
 
     @FXML
@@ -176,6 +185,52 @@ public class AgendamentoViewController {
                 });
             }
         }).start();
+    }
+    @FXML
+    private void handleAbrirHistorico() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/historico.fxml"));
+            fxmlLoader.setControllerFactory(context::getBean);
+
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Histórico de Agendamentos");
+            stage.setScene(scene);
+
+            // Modality.APPLICATION_MODAL impede o usuário de interagir com a tela de agendamento
+            // enquanto a tela de histórico estiver aberta.
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Erro ao abrir o histórico.");
+        }
+    }
+
+    @FXML
+    private void handleLogout() {
+        // 1. Limpa a sessão do usuário
+        UserSession.getInstance().cleanUserSession();
+
+        try {
+            // 2. Abre a tela de login novamente
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            fxmlLoader.setControllerFactory(context::getBean);
+
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Login - Sistema de Agendamento");
+            stage.setScene(scene);
+
+            // 3. Fecha a janela de agendamento atual
+            Stage agendamentoStage = (Stage) logoutButton.getScene().getWindow();
+            agendamentoStage.close();
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void resetFields() {

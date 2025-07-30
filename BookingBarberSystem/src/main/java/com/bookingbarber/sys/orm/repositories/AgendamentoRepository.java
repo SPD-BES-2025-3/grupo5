@@ -21,13 +21,11 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
             OffsetDateTime fimDoIntervalo
     );
 
-    /**
-     * CORRIGIDO: O nome do método agora reflete o campo `horarioInicio` da entidade.
-     * Busca todos os agendamentos de um profissional cujo horário de início está dentro de um período.
-     */
     List<Agendamento> findAllByProfissionalIdAndHorarioInicioBetween(
             Long profissionalId,
             OffsetDateTime inicioDoDia,
             OffsetDateTime fimDoDia
     );
+
+    List<Agendamento> findAllByClienteIdOrderByHorarioInicioDesc(Long clienteId);
 }

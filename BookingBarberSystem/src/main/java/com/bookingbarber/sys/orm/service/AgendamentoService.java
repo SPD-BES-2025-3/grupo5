@@ -148,26 +148,63 @@ public class AgendamentoService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<LocalTime> buscarHorariosDisponiveis(Long profissionalId, List<Long> servicoIds, LocalDate data) {
-        // Busca a LISTA de serviços
+        System.out.println("\n--- INICIANDO BUSCA DE HORÁRIOS ---");
+        System.out.println("Data: " + data + ", Profissional ID: " + profissionalId + ", Serviços IDs: " + servicoIds);
+
+        if (!profissionalRepository.existsById(profissionalId)) {
+            throw new EntityNotFoundException("Profissional não encontrado.");
+        }
         List<Servico> servicos = servicoRepository.findAllById(servicoIds);
         if (servicos.size() != servicoIds.size()) {
-            throw new EntityNotFoundException("Um ou mais serviços não foram encontrados para calcular a duração.");
+            throw new EntityNotFoundException("Um ou mais serviços não foram encontrados.");
         }
 
-        // SOMA as durações para saber o tamanho do "bloco" de tempo necessário
-        int duracaoTotalServicos = servicos.stream()
-                .mapToInt(Servico::getDuracao)
-                .sum();
+        int duracaoTotalServicos = servicos.stream().mapToInt(Servico::getDuracao).sum();
+        System.out.println("Duração Total Calculada: " + duracaoTotalServicos + " minutos.");
 
-        // O resto da lógica é a mesma de antes, mas usando a `duracaoTotalServicos`
-        // ... (Define expediente, busca agendamentos existentes, itera e verifica conflitos) ...
+        final LocalTime inicioExpediente = LocalTime.of(8, 0);
+        final LocalTime fimExpediente = LocalTime.of(18, 0);
+        System.out.println("Expediente Definido: " + inicioExpediente + " - " + fimExpediente);
 
-        // Exemplo da parte principal do loop:
-        // LocalTime horarioFimPotencial = horarioAtual.plusMinutes(duracaoTotalServicos);
-        // ...
+        ZoneOffset fusoHorarioLocal = OffsetDateTime.now().getOffset();
+        OffsetDateTime inicioDoDia = data.atTime(inicioExpediente).atOffset(fusoHorarioLocal);
+        OffsetDateTime fimDoDia = data.atTime(fimExpediente).atOffset(fusoHorarioLocal);
 
-        return new ArrayList<>(); // Placeholder para a lógica completa do loop
+        List<Agendamento> agendamentosDoDia = agendamentoRepository
+                .findAllByProfissionalIdAndHorarioInicioBetween(profissionalId, inicioDoDia, fimDoDia);
+        System.out.println("Agendamentos existentes encontrados para o dia: " + agendamentosDoDia.size());
+        agendamentosDoDia.forEach(ag -> System.out.println("  - Ocupado de " + ag.getHorarioInicio().toLocalTime() + " até " + ag.getHorarioFim().toLocalTime()));
+
+        List<LocalTime> horariosDisponiveis = new ArrayList<>();
+        LocalTime horarioAtual = inicioExpediente;
+        final int intervaloSlots = 30;
+
+        System.out.println("Verificando slots a cada " + intervaloSlots + " minutos...");
+        while (!horarioAtual.isAfter(fimExpediente.minusMinutes(duracaoTotalServicos))) {
+            LocalTime horarioFimPotencial = horarioAtual.plusMinutes(duracaoTotalServicos);
+            System.out.print("  - Verificando slot: " + horarioAtual + " até " + horarioFimPotencial + " -> ");
+
+            LocalTime finalHorarioAtual = horarioAtual;
+            boolean temConflito = agendamentosDoDia.stream().anyMatch(agendamentoExistente -> {
+                LocalTime inicioAgendamento = agendamentoExistente.getHorarioInicio().toLocalTime();
+                LocalTime fimAgendamento = agendamentoExistente.getHorarioFim().toLocalTime();
+                return finalHorarioAtual.isBefore(fimAgendamento) && horarioFimPotencial.isAfter(inicioAgendamento);
+            });
+
+            if (!temConflito) {
+                System.out.println("Disponível!");
+                horariosDisponiveis.add(horarioAtual);
+            } else {
+                System.out.println("Conflito Encontrado.");
+            }
+
+            horarioAtual = horarioAtual.plusMinutes(intervaloSlots);
+        }
+
+        System.out.println("--- FIM DA BUSCA DE HORÁRIOS ---");
+        return horariosDisponiveis;
     }
 
 

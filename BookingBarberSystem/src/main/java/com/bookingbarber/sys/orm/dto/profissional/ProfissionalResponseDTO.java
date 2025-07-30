@@ -11,8 +11,13 @@ public record ProfissionalResponseDTO(
         String email,
         String numeroRegistro,
         Double percentualComissao,
-        Set<Especialidade> especialidades,
+        Set<String> especialidades,
         boolean ativo
 ) {
+    @Override
+    public String toString(){
+        return nome + " " + sobrenome;
+
+    }
 
 }

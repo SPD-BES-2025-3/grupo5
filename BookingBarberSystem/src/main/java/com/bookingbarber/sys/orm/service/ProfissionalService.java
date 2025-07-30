@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfissionalService {
@@ -114,6 +116,8 @@ public class ProfissionalService {
         profissionalRepository.save(profissional);
     }
     private ProfissionalResponseDTO mapToResponseDTO(Profissional profissional) {
+        Set<String> nomeEspecialidades = profissional.getEspecialidades().stream()
+                .map(Especialidade::getNome).collect(Collectors.toSet());
         return new ProfissionalResponseDTO(
                 profissional.getId(),
                 profissional.getNome(),
@@ -121,7 +125,7 @@ public class ProfissionalService {
                 profissional.getEmail(),
                 profissional.getNumeroRegistro(),
                 profissional.getPercentualComissao(),
-                profissional.getEspecialidades(),
+                nomeEspecialidades,
                 profissional.getAtivo()
         );
     }

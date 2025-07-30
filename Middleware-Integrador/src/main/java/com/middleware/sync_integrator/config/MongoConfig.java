@@ -1,4 +1,4 @@
-package com.middleware.sync_integrator.messaging.config;
+package com.middleware.sync_integrator.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

@@ -1,13 +1,14 @@
 package com.bookingbarber.sys;
 
-import org.springframework.boot.SpringApplication;
+import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SysApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SysApplication.class, args);
+
+		Application.launch(JavaFxApplication.class, args);
 	}
 
 }

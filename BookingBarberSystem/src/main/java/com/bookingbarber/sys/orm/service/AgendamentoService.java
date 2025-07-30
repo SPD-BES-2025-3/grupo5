@@ -47,8 +47,7 @@ public class AgendamentoService {
     private static final int MINUTOS_ANTECEDENCIA_CANCELAMENTO = 60;
     private static final ZoneId FUSO_HORARIO_LOCAL = ZoneId.of("America/Sao_Paulo");
 
-
-
+    
     @Transactional
     public AgendamentoResponseDTO insertAgendamento(AgendamentoRequestDTO dto){
         Cliente cliente = clienteRepository.findById(dto.clienteId())

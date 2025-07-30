@@ -1,16 +1,15 @@
-package com.bookingbarber.sys.orm.service;
+package com.middleware.sync_integrator.orm.service;
 
-import com.bookingbarber.sys.messaging.event.AgendamentoSalvoEventDTO;
-import com.bookingbarber.sys.messaging.publisher.AgendamentoOrmPublisher;
-import com.bookingbarber.sys.orm.dto.agendamento.AgendamentoRequestDTO;
-import com.bookingbarber.sys.orm.dto.agendamento.AgendamentoResponseDTO;
-import com.bookingbarber.sys.orm.dto.agendamento.ReagendamentorRequestDTO;
-import com.bookingbarber.sys.orm.entities.*;
-import com.bookingbarber.sys.orm.entities.enums.StatusAgendamento;
-import com.bookingbarber.sys.orm.repositories.AgendamentoRepository;
-import com.bookingbarber.sys.orm.repositories.ClienteRepository;
-import com.bookingbarber.sys.orm.repositories.ProfissionalRepository;
-import com.bookingbarber.sys.orm.repositories.ServicoRepository;
+import com.middleware.sync_integrator.messaging.event.AgendamentoSalvoEventDTO;
+import com.middleware.sync_integrator.orm.dto.agendamento.AgendamentoRequestDTO;
+import com.middleware.sync_integrator.orm.dto.agendamento.AgendamentoResponseDTO;
+import com.middleware.sync_integrator.orm.dto.agendamento.ReagendamentorRequestDTO;
+import com.middleware.sync_integrator.orm.entities.*;
+import com.middleware.sync_integrator.orm.entities.enums.StatusAgendamento;
+import com.middleware.sync_integrator.orm.repositories.AgendamentoRepository;
+import com.middleware.sync_integrator.orm.repositories.ClienteRepository;
+import com.middleware.sync_integrator.orm.repositories.ProfissionalRepository;
+import com.middleware.sync_integrator.orm.repositories.ServicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -196,14 +195,3 @@ public class AgendamentoService {
     }
 }
 
-@Component
-class AgendamentoEventListener {
-    @Autowired
-    private AgendamentoOrmPublisher rabbitmqPublisher;
-
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onAgendamentoSalvo(AgendamentoSalvoEventDTO evento){
-        rabbitmqPublisher.publicarAgendamento(evento.agendamentoId(), evento.tipoEvento());
-    }
-
-}

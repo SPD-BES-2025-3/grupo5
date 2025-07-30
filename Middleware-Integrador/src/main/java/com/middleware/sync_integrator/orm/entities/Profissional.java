@@ -1,4 +1,4 @@
-package com.bookingbarber.sys.orm.entities;
+package com.middleware.sync_integrator.orm.entities;
 
 import jakarta.persistence.*;
 

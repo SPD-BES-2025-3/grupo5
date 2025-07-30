@@ -96,4 +96,5 @@ public class AgendamentoODM {
     public void setStatusAgendamento(StatusAgendamento statusAgendamento) {
         this.statusAgendamento = statusAgendamento;
     }
+
 }

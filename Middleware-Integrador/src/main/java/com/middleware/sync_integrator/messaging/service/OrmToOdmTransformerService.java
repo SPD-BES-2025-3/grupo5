@@ -6,9 +6,7 @@ import com.middleware.sync_integrator.odm.dto.ServicoOdmDTO;
 import com.middleware.sync_integrator.odm.entities.AgendamentoODM;
 import com.middleware.sync_integrator.odm.repositories.AgendamentoODMRespository;
 import com.middleware.sync_integrator.orm.entities.Agendamento;
-import com.middleware.sync_integrator.orm.entities.Servico;
 import com.middleware.sync_integrator.orm.repositories.AgendamentoRepository;
-import com.middleware.sync_integrator.orm.repositories.ServicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,7 @@ public class OrmToOdmTransformerService {
                 .orElseThrow(()->new EntityNotFoundException("Agendamento ORM não encontrado"));
 
         String nomeClienteCompleto = agendamentoORM.getCliente().getNome() + " " + agendamentoORM.getCliente().getSobrenome();
-        var cliente = new ClienteOmdDTO(agendamentoORM.getCliente().getId(), nomeClienteCompleto);
+        var cliente = new ClienteOmdDTO(agendamentoORM.getCliente().getId(), nomeClienteCompleto, agendamentoORM.getCliente().getCpf(), agendamentoORM.getCliente().getEmail());
 
         String nomeProfissionalCompleto = agendamentoORM.getProfissional().getNome() + " " + agendamentoORM.getProfissional().getSobrenome();
         var profissional = new ProfissionalOdmDTO(agendamentoORM.getProfissional().getId(), nomeProfissionalCompleto);

@@ -1,6 +1,6 @@
 package com.bookingbarber.sys.orm.service;
 
-import com.bookingbarber.sys.messaging.event.AgendamentoSalvoEventDTO;
+import com.bookingbarber.sys.messaging.event.AgendamentoOrmSalvoEventDTO;
 import com.bookingbarber.sys.messaging.publisher.AgendamentoOrmPublisher;
 import com.bookingbarber.sys.orm.dto.agendamento.AgendamentoRequestDTO;
 import com.bookingbarber.sys.orm.dto.agendamento.AgendamentoResponseDTO;
@@ -89,7 +89,7 @@ public class AgendamentoService {
         novoAgendamento.setValorTotal(valorTotal);
 
         Agendamento agendamentoSalvo = agendamentoRepository.save(novoAgendamento);
-        eventPublisher.publishEvent(new AgendamentoSalvoEventDTO(agendamentoSalvo.getId(),"CRIADO"));
+        eventPublisher.publishEvent(new AgendamentoOrmSalvoEventDTO(agendamentoSalvo.getId(),"CRIADO"));
 
         return mapToDetalhadoDTO(agendamentoSalvo);
 
@@ -261,7 +261,7 @@ class AgendamentoEventListener {
     private AgendamentoOrmPublisher rabbitmqPublisher;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onAgendamentoSalvo(AgendamentoSalvoEventDTO evento){
+    public void onAgendamentoSalvo(AgendamentoOrmSalvoEventDTO evento){
         rabbitmqPublisher.publicarAgendamento(evento.agendamentoId(), evento.tipoEvento());
     }
 

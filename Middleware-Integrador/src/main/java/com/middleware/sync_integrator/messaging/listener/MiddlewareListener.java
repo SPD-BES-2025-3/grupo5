@@ -1,7 +1,9 @@
 package com.middleware.sync_integrator.messaging.listener;
 
 import com.middleware.sync_integrator.messaging.config.RabbitMQConfig;
-import com.middleware.sync_integrator.messaging.event.AgendamentoSalvoEventDTO;
+import com.middleware.sync_integrator.messaging.event.AgendamentoOdmSalvoEventDTO;
+import com.middleware.sync_integrator.messaging.event.AgendamentoOrmSalvoEventDTO;
+import com.middleware.sync_integrator.messaging.service.OdmToOrmTransformerService;
 import com.middleware.sync_integrator.messaging.service.OrmToOdmTransformerService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,12 @@ public class MiddlewareListener {
 
     @Autowired
     private OrmToOdmTransformerService transformerService;
-    @RabbitListener(queues = RabbitMQConfig.AGENDAMENTO_SYNC_ODM_QUEUE)
-    public void processarEventoDeAgendamento(AgendamentoSalvoEventDTO eventDTO){
+
+    @Autowired
+    private OdmToOrmTransformerService odmToOrmTransformer;
+
+    @RabbitListener(queues = RabbitMQConfig.QUEUE_ORM_TO_ODM)
+    public void processarEventoDeAgendamento(AgendamentoOrmSalvoEventDTO eventDTO){
         System.out.println("Middleware recebeu evento: " + eventDTO);
         try {
             if("CANCELADO".equals(eventDTO.tipoEvento())|| "DELETADO".equals(eventDTO.tipoEvento())){
@@ -26,6 +32,16 @@ public class MiddlewareListener {
             // Lançar exceção aqui fará o RabbitMQ tentar reprocessar a mensagem (se configurado)
             // ou enviá-la para uma Dead-Letter Queue.
             throw new RuntimeException("Erro no processamento do evento.", e);
+        }
+    }
+    @RabbitListener(queues = RabbitMQConfig.QUEUE_ODM_TO_ORM)
+    public void processarEventoDeAgendamentoOdm(AgendamentoOdmSalvoEventDTO evento) {
+        System.out.println("Middleware recebeu evento do ODM: " + evento);
+        try {
+            odmToOrmTransformer.normalizarESalvar(evento.documentoId());
+        } catch (Exception e) {
+            System.err.println("Falha ao processar evento do ODM para o documento ID " + evento.documentoId() + ": " + e.getMessage());
+            throw new RuntimeException("Erro no processamento do evento ODM.", e);
         }
     }
 

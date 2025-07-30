@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookingbarber.sys.odm.view.AgendamentoFlexOdmController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Label text="Agendamento Flexível (via ODM)">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label text="Este formulário demonstra a flexibilidade de um banco de dados de documentos. Selecione os serviços e adicione atributos dinâmicos." textAlignment="CENTER" wrapText="true" />
+
+      <GridPane hgap="10.0" vgap="10.0">
+         <children>
+            <Label text="Email do Profissional:" />
+            <TextField fx:id="profissionalEmailField" promptText="Ex: carlos.souza@barber.com" GridPane.columnIndex="1" />
+
+            <Label text="Selecione os Serviços:" GridPane.rowIndex="1" />
+            <ListView fx:id="servicosListView" prefHeight="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Data e Hora:" GridPane.rowIndex="2" />
+            <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <DatePicker fx:id="dataPicker" prefWidth="150.0" />
+                  <TextField fx:id="horaField" promptText="HH:mm" prefWidth="100.0" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+
+      <Label text="Atributos Dinâmicos:">
+         <font><Font name="System Bold" size="14.0" /></font>
+      </Label>
+      <TableView fx:id="atributosTableView" prefHeight="100.0">
+         <columns>
+            <TableColumn fx:id="chaveColumn" prefWidth="150.0" text="Chave" />
+            <TableColumn fx:id="valorColumn" prefWidth="200.0" text="Valor" />
+         </columns>
+      </TableView>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <TextField fx:id="chaveField" promptText="Nome do Atributo" />
+            <TextField fx:id="valorField" promptText="Valor do Atributo" />
+            <Button onAction="#handleAddAtributo" text="Adicionar" />
+         </children>
+      </HBox>
+
+      <Button onAction="#handleAgendarOdm" prefHeight="35.0" style="-fx-font-weight: bold;" text="Criar Documento de Agendamento" />
+      <Label fx:id="statusLabel" textAlignment="CENTER" wrapText="true" />
+   </children>
+</VBox>

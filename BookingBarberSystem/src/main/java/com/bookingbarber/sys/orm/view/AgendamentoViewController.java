@@ -189,7 +189,7 @@ public class AgendamentoViewController {
     @FXML
     private void handleAbrirHistorico() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/historico.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/orm/historico.fxml"));
             fxmlLoader.setControllerFactory(context::getBean);
 
             Scene scene = new Scene(fxmlLoader.load());

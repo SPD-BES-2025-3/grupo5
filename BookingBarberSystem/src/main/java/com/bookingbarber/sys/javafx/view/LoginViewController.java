@@ -1,4 +1,4 @@
-package com.bookingbarber.sys.orm.view;
+package com.bookingbarber.sys.javafx.view;
 
 import com.bookingbarber.sys.javafx.UserSession;
 import com.bookingbarber.sys.orm.dto.auth.LoginRequestDTO;
@@ -67,30 +67,27 @@ public class LoginViewController {
     }
 
     private void abrirTelaDeAgendamento() {
+        // ESTE MÉTODO AGORA ABRE O FRAME PRINCIPAL
         try {
-            String fxmlPath = "/agendamento.fxml";
+            String fxmlPath = "/main-view.fxml"; // <-- MUDANÇA AQUI
             URL fxmlUrl = getClass().getResource(fxmlPath);
-            if (fxmlUrl == null) {
-                throw new IOException("Arquivo FXML não encontrado: " + fxmlPath);
-            }
+            if (fxmlUrl == null) throw new IOException("Arquivo FXML não encontrado: " + fxmlPath);
 
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
-            // Pede ao Spring para criar o controller, garantindo a injeção de dependências
             fxmlLoader.setControllerFactory(context::getBean);
 
-            Scene scene = new Scene(fxmlLoader.load(), 420, 550);
+            Scene scene = new Scene(fxmlLoader.load()); // O tamanho é definido no FXML
             Stage stage = new Stage();
-            stage.setTitle("Novo Agendamento");
+            stage.setTitle("Booking Barber System"); // Título da janela principal
             stage.setScene(scene);
 
-            // Fecha a janela de login atual
             Stage loginStage = (Stage) statusLabel.getScene().getWindow();
             loginStage.close();
 
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            Platform.runLater(() -> statusLabel.setText("Erro crítico ao carregar a tela de agendamento."));
+            Platform.runLater(() -> statusLabel.setText("Erro crítico ao carregar a tela principal."));
         }
     }
 }

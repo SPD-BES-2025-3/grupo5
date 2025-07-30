@@ -1,6 +1,6 @@
 package com.bookingbarber.sys.odm.entities;
 
-import com.bookingbarber.sys.odm.dto.ClienteOmdDTO;
+import com.bookingbarber.sys.odm.dto.ClienteOdmDTO;
 import com.bookingbarber.sys.odm.dto.ProfissionalOdmDTO;
 import com.bookingbarber.sys.odm.dto.ServicoOdmDTO;
 import jakarta.persistence.Id;
@@ -19,7 +19,7 @@ public class AgendamentoODM {
     private OffsetDateTime horarioFim;
     private BigDecimal valorTotal;
 
-    private ClienteOmdDTO clienteODM;
+    private ClienteOdmDTO clienteODM;
     private ProfissionalOdmDTO profissionalODM;
     private List<ServicoOdmDTO> servicosODM;
 
@@ -63,11 +63,11 @@ public class AgendamentoODM {
         this.valorTotal = valorTotal;
     }
 
-    public ClienteOmdDTO getClienteODM() {
+    public ClienteOdmDTO getClienteODM() {
         return clienteODM;
     }
 
-    public void setClienteODM(ClienteOmdDTO clienteODM) {
+    public void setClienteODM(ClienteOdmDTO clienteODM) {
         this.clienteODM = clienteODM;
     }
 

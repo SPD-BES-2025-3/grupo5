@@ -1,0 +1,59 @@
+[33mcommit 9b94e3570afc44c73f2ce8236628bdba2c94a9c7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Wed Jul 30 10:53:08 2025 -0300
+
+    Historico View
+
+[33mcommit 401edf1507ae01a1daf2384836f5c2a02682b2f4[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Wed Jul 30 07:28:26 2025 -0300
+
+    View Agendamento ORM
+
+[33mcommit 7c0120b405f206896645b74682abafdb0951383f[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Wed Jul 30 03:04:07 2025 -0300
+
+    Middleware Desenvolvido
+
+[33mcommit c01b9f6c2a385f0641f850a1fb14dc834d6d548a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Tue Jul 22 23:48:04 2025 -0300
+
+    Finalização da persistencia ORM, CRUD completo de todas as entidades, Diagramas de Sequencia e Componentes, Relatorio Individual e Updated ReadME
+
+[33mcommit e96118fb41b403d980ca73c791718fd810234a49[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Mon Jul 21 18:07:00 2025 -0300
+
+    Iniciação CRUD Cliente e Agendamento
+
+[33mcommit 76dfd1573ab41c4b8f6be8a00cd3bda8dba6a70c[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Mon Jul 21 12:27:49 2025 -0300
+
+    Uptaded README
+
+[33mcommit b5da5c82ef82afee642ba21bdcecaf89d1dad15b[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Mon Jul 21 12:25:14 2025 -0300
+
+    Updated README
+
+[33mcommit 17b82713969140e61c2f8cf3f416087fe6f88a49[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Sat Jul 19 17:56:35 2025 -0300
+
+    Mapeando Classes ORM
+
+[33mcommit 4a2f37c04ec80b8bdf47201babbf1098025ad850[m
+Author: Guilherme Silvério <guilhermegsilverio@gmail.com>
+Date:   Sat Jul 19 12:56:38 2025 -0300
+
+    Iniciando projeto
+
+[33mcommit e43a47d602931c9a47211af6afdece5491c92822[m
+Author: Marcelo Akira Inuzuka <marcelo.akira@gmail.com>
+Date:   Wed Jul 16 21:08:50 2025 -0300
+
+    Initial commit

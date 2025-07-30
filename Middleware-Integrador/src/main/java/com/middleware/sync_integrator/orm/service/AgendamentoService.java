@@ -1,6 +1,6 @@
 package com.middleware.sync_integrator.orm.service;
 
-import com.middleware.sync_integrator.messaging.event.AgendamentoSalvoEventDTO;
+import com.middleware.sync_integrator.messaging.event.AgendamentoOrmSalvoEventDTO;
 import com.middleware.sync_integrator.orm.dto.agendamento.AgendamentoRequestDTO;
 import com.middleware.sync_integrator.orm.dto.agendamento.AgendamentoResponseDTO;
 import com.middleware.sync_integrator.orm.dto.agendamento.ReagendamentorRequestDTO;
@@ -13,11 +13,8 @@ import com.middleware.sync_integrator.orm.repositories.ServicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.math.BigDecimal;
 import java.time.*;
@@ -88,7 +85,7 @@ public class AgendamentoService {
         novoAgendamento.setValorTotal(valorTotal);
 
         Agendamento agendamentoSalvo = agendamentoRepository.save(novoAgendamento);
-        eventPublisher.publishEvent(new AgendamentoSalvoEventDTO(agendamentoSalvo.getId(),"CRIADO"));
+        eventPublisher.publishEvent(new AgendamentoOrmSalvoEventDTO(agendamentoSalvo.getId(),"CRIADO"));
 
         return mapToDetalhadoDTO(agendamentoSalvo);
 

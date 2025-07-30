@@ -13,35 +13,32 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    //roteador de mensagens do ORM
+
+    // --- FLUXO 1: ORM -> ODM ---
     public static final String ORM_EVENTS_EXCHANGE = "orm.events.exchange";
+    public static final String QUEUE_ORM_TO_ODM = "q.orm_to_odm.sync";
+    public static final String ROUTING_KEY_AGENDAMENTO_SALVO_ORM = "agendamento.salvo.orm";
 
-    // Fila: Onde as mensagens de agendamento ficam para serem processadas pelo middleware
-    public static final String AGENDAMENTO_SYNC_ODM_QUEUE = "agendamento.sync.odm.queue";
-
-    // Routing Key: A "etiqueta" da mensagem
-    public static final String AGENDAMENTO_SALVO_ROUTING_KEY = "agendamento.salvo";
-
-    @Bean
-    public TopicExchange ormEventsExchange(){
-        return new TopicExchange(ORM_EVENTS_EXCHANGE);
+    @Bean public TopicExchange ormEventsExchange() { return new TopicExchange(ORM_EVENTS_EXCHANGE); }
+    @Bean public Queue queueOrmToOdm() { return new Queue(QUEUE_ORM_TO_ODM, true); }
+    @Bean public Binding bindingOrmToOdm(Queue queueOrmToOdm, TopicExchange ormEventsExchange) {
+        return BindingBuilder.bind(queueOrmToOdm).to(ormEventsExchange).with(ROUTING_KEY_AGENDAMENTO_SALVO_ORM);
     }
 
-    @Bean
-    public Queue agendamentoSyncOdmQueue(){
-        return new Queue(AGENDAMENTO_SYNC_ODM_QUEUE);
+    // --- FLUXO 2: ODM -> ORM ---
+    public static final String ODM_EVENTS_EXCHANGE = "odm.events.exchange";
+    public static final String QUEUE_ODM_TO_ORM = "q.odm_to_orm.sync";
+    public static final String ROUTING_KEY_AGENDAMENTO_SALVO_ODM = "agendamento.salvo.odm";
+
+    @Bean public TopicExchange odmEventsExchange() { return new TopicExchange(ODM_EVENTS_EXCHANGE); }
+    @Bean public Queue queueOdmToOrm() { return new Queue(QUEUE_ODM_TO_ORM, true); }
+    @Bean public Binding bindingOdmToOrm(Queue queueOdmToOrm, TopicExchange odmEventsExchange) {
+        return BindingBuilder.bind(queueOdmToOrm).to(odmEventsExchange).with(ROUTING_KEY_AGENDAMENTO_SALVO_ODM);
     }
 
+    // --- CONFIGURAÇÃO GLOBAL ---
     @Bean
-    public Binding binding(Queue agendamentoSyncOdmQueue, TopicExchange ormEventsExchange){
-        return BindingBuilder.bind(agendamentoSyncOdmQueue)
-                .to(ormEventsExchange)
-                .with(AGENDAMENTO_SALVO_ROUTING_KEY);
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter(){
+    public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
 }

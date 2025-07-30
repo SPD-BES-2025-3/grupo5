@@ -1,6 +1,6 @@
 package com.bookingbarber.sys.odm.dto;
 
-public record ClienteOmdDTO(
+public record ClienteOdmDTO(
         Long clienteId,
         String nomeCompleto
 ) {

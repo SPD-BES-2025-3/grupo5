@@ -1,7 +1,7 @@
 -- =======================================================
 -- SCRIPT PARA POVOAR E SINCRONIZAR O BANCO DE DADOS
 -- =======================================================
-/*
+
 -- 1. INSERINDO ROLES
 INSERT INTO tb_role (id, authority) VALUES (1, 'ROLE_CLIENTE') ON CONFLICT (id) DO NOTHING;
 INSERT INTO tb_role (id, authority) VALUES (2, 'ROLE_PROFISSIONAL') ON CONFLICT (id) DO NOTHING;
@@ -45,5 +45,5 @@ SELECT setval('servico_id_seq', (SELECT MAX(id) FROM tb_servico));
 SELECT setval('usuario_id_seq', (SELECT MAX(id) FROM tb_usuario));
 
 -- Tabelas sem ID próprio (como cliente e profissional) não possuem sequência própria, pois usam o ID de 'usuario'.
--- Tabelas de junção (como usuario_role) também não possuem sequência.*/
+-- Tabelas de junção (como usuario_role) também não possuem sequência.
 

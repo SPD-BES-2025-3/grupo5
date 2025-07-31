@@ -102,3 +102,83 @@ _Período: Sábado, 19/07 a Terça, 22/07_
 Inclusão de um objeto no ORM.
 
 ![Diagrama de Classes](diagramas/disgramaSequencia.png)
+
+### 4.4 Diagrama de Sequência:
+
+Inclusão de um objeto na ODM.
+
+![Diagrama de Classes](diagramas/diagramaSequenciaODM.png)
+
+### 5. Instalação e Execução
+
+Este guia descreve os passos necessários para configurar e executar o ecossistema completo do Booking Barber System localmente.
+
+### Pré-requisitos
+
+Antes de começar, garanta que você tenha os seguintes softwares instalados e em execução no seu ambiente:
+
+- Java (JDK): Versão 17 ou superior.
+
+- Maven: Para gerenciamento de dependências e build do projeto.
+
+- PostgreSQL: Banco de dados relacional.
+
+- MongoDB: Banco de dados de documentos.
+
+- RabbitMQ: Broker de mensageria.
+
+- Git: Para clonar o repositório.
+
+### Configuração do Ambiente
+
+**Clonar os Repositórios**
+Clone os repositórios da Aplicação Principal e do Middleware Integrador para a sua máquina local.
+
+### Configurar os Bancos de Dados
+
+**PostgreSQL:**
+
+- Crie um banco de dados para a aplicação principal (ex: `bookingbarber_orm_db`).
+
+- Abra o arquivo `application.properties` da Aplicação Principal e ajuste as configurações de `spring.datasource` com a URL, seu usuário e senha.
+
+**MongoDB:**
+
+- Crie um banco de dados para a camada ODM (ex: `bookingsysodm`).
+
+- Abra o `application.properties` da Aplicação Principal e do Middleware Integrador e ajuste a `spring.data.mongodb.uri` para apontar para o seu banco de dados.
+
+### Povoar o Banco de Dados Relacional (Seed)
+
+Para que a aplicação funcione com dados iniciais, é necessário popular o banco de dados ORM.
+
+1. Conecte-se ao seu banco de dados PostgreSQL (`bookingbarber_orm_db`).
+
+2. Execute o script SQL fornecido no projeto para inserir os dados iniciais (`Roles`, `Clientes`, `Profissionais`, `Serviços`) e sincronizar as sequências de ID.
+
+### Executando o Ecossistema
+
+A ordem de inicialização é importante para garantir que os componentes se conectem corretamente.
+
+**Iniciar a Infraestrutura**
+Garanta que os serviços do PostgreSQL, MongoDB e RabbitMQ estejam em execução.
+
+- Dica: Para o RabbitMQ, verifique se o painel de gerenciamento está acessível em `http://localhost:15672` para monitorar as filas.
+
+### Iniciar o Middleware Integrador
+
+1. Abra o projeto sync-integrator na sua IDE.
+
+2. Execute a classe principal (ex: `SyncIntegratorApplication.java`).
+
+3. Verifique no console se ele se conectou com sucesso aos dois bancos de dados e ao RabbitMQ. Ele ficará "ouvindo" por novas mensagens.
+
+### Iniciar a Aplicação Principal (ORM + JavaFX)
+
+1. Abra o projeto da aplicação principal (`bookingbarber-sys`) na sua IDE.
+
+2. Execute a classe principal (ex: `SysApplication.java`).
+
+3. Aguarde o console mostrar que o Spring Boot iniciou. A janela de login da interface gráfica em JavaFX deverá aparecer automaticamente.
+
+Neste ponto, todo o ecossistema está no ar. Você pode fazer o login com um dos usuários do script de seed e começar a testar os fluxos de agendamento.

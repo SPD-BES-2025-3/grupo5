@@ -81,7 +81,7 @@ public class OdmToOrmTransformerService {
         }
     }
 
-    @Transactional
+
     public Agendamento executarLogicaDeNormalizacao(AgendamentoFlexODM doc) {
         // 1. Busca as entidades referenciadas no PostgreSQL
         var cliente = clienteOrmRepository.findById(doc.getClienteId())
